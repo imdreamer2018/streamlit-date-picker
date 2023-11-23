@@ -29,7 +29,7 @@ interface State {
 
 const format_string = 'YYYY-MM-DD HH:mm:ss'
 
-class DateTimeRangePicker extends StreamlitComponentBase<State> {
+class DatetimeRangePicker extends StreamlitComponentBase<State> {
 
 
     constructor(props: ComponentProps<any>, context: any) {
@@ -101,4 +101,4 @@ class DateTimeRangePicker extends StreamlitComponentBase<State> {
     }
 }
 
-export default withStreamlitConnection(DateTimeRangePicker)
+export default withStreamlitConnection(DatetimeRangePicker)
