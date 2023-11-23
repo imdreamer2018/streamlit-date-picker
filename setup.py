@@ -11,7 +11,7 @@ setuptools.setup(
     description="this is datetime range picker for skynet website",
     long_description=README,
     long_description_content_type="text/markdown",
-    # url="https://github.com/dnplus/streamlit-oauth",
+    url="https://github.com/imdreamer2018/streamlit-datetime-range-picker",
     packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[],
