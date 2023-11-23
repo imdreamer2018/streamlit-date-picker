@@ -5,7 +5,7 @@ README = (Path(__file__).parent/"README.md").read_text()
 
 setuptools.setup(
     name="streamlit-datetime-range-picker",
-    version="0.0.1-beta",
+    version="0.0.1b1",
     author="Yang Qian",
     author_email="qian.yang2@thoughtworks.com",
     description="this is datetime range picker for skynet website",
