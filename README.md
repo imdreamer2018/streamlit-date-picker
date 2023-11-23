@@ -8,7 +8,7 @@
 ## Project Introduction
 
 `streamlit-datetime-range-picker` is a datetime range picker designed for use with [Streamlit](https://streamlit.io/). It allows users to easily select a range of dates and times.
-[Streamlit Datetime Range Picker](https://github.com/imdreamer2018/streamlit-datetime-range-picker/blob/master/images/datetime_range_picker.png)
+![Streamlit Datetime Range Picker](https://github.com/imdreamer2018/streamlit-datetime-range-picker/blob/master/images/datetime_range_picker.png)
 
 ## Installation
 
