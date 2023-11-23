@@ -13,6 +13,5 @@ def datetime_range_picker(start=-30, end=0, unit='minutes', key=None, picker_but
         parent_dir = os.path.dirname(os.path.abspath(__file__))
         build_dir = os.path.join(parent_dir, "frontend/build")
         _date_time_range_picker_component = components.declare_component("datetime_range_picker", path=build_dir)
-        print(_date_time_range_picker_component)
 
     return _date_time_range_picker_component(start=start, end=end, unit=unit, key=key, picker_button=picker_button)
