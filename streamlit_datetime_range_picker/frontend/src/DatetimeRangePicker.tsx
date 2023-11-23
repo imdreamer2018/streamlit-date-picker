@@ -24,7 +24,11 @@ const { RangePicker } = DatePicker;
 interface State {
     height: number,
     start_datetime: dayjs.Dayjs,
-    end_datetime: dayjs.Dayjs
+    end_datetime: dayjs.Dayjs,
+    picker_button: {
+        is_show: boolean,
+        button_name: string
+    }
 }
 
 const format_string = 'YYYY-MM-DD HH:mm:ss'
@@ -34,10 +38,13 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
 
     constructor(props: ComponentProps<any>, context: any) {
         super(props, context);
+        const pickerButton = this.props.args["picker_button"] || { is_show: false, button_name: "Refresh last 30min" };
+        console.log(pickerButton);
         this.state = {
             height: 50,
             start_datetime: dayjs().add(this.props.args["start"], this.props.args["unit"]),
-            end_datetime: dayjs().add(this.props.args["end"], this.props.args["unit"])
+            end_datetime: dayjs().add(this.props.args["end"], this.props.args["unit"]),
+            picker_button: pickerButton
         }
         Streamlit.setFrameHeight(this.state.height)
         this.setComponentValue()
@@ -72,7 +79,8 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
                            onOpenChange={this._onOpenChange}
                            value={[this.state.start_datetime, this.state.end_datetime]}
               />
-              <Button onClick={this._button_on_click} style={{ marginLeft: '20px' }}>Refresh last 30min</Button>
+                {this.state.picker_button.is_show &&
+                    <Button onClick={this._button_on_click} style={{ marginLeft: '20px' }}>{this.state.picker_button.button_name}</Button>}
             </div>
         )
     }

@@ -2,7 +2,7 @@ import streamlit.components.v1 as components
 import os
 
 
-def datetime_range_picker(start=-30, end=0, unit='minutes', key=None):
+def datetime_range_picker(start=-30, end=0, unit='minutes', key=None, picker_button=None):
     _RELEASE = True
     if not _RELEASE:
         _date_time_range_picker_component = components.declare_component(
@@ -15,4 +15,4 @@ def datetime_range_picker(start=-30, end=0, unit='minutes', key=None):
         _date_time_range_picker_component = components.declare_component("datetime_range_picker", path=build_dir)
         print(_date_time_range_picker_component)
 
-    return _date_time_range_picker_component(start=start, end=end, unit=unit, key=key)
+    return _date_time_range_picker_component(start=start, end=end, unit=unit, key=key, picker_button=picker_button)
