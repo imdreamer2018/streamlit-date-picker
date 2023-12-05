@@ -13,6 +13,7 @@ import 'dayjs/locale/zh-cn';
 import 'dayjs/plugin/utc';
 import 'dayjs/plugin/timezone';
 import 'dayjs/plugin/localeData';
+import {FormatString, getFormatString, getPickerType, PickerType} from "./utils";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -23,27 +24,27 @@ const { RangePicker } = DatePicker;
 
 interface State {
     height: number,
-    start_datetime: dayjs.Dayjs,
-    end_datetime: dayjs.Dayjs,
+    picker_type: PickerType,
+    format_string: FormatString
+    start: dayjs.Dayjs,
+    end: dayjs.Dayjs,
     picker_button: {
         is_show: boolean,
         button_name: string
     }
 }
-
-const format_string = 'YYYY-MM-DD HH:mm:ss'
-
 class DatetimeRangePicker extends StreamlitComponentBase<State> {
 
 
     constructor(props: ComponentProps<any>, context: any) {
         super(props, context);
         const pickerButton = this.props.args["picker_button"] || { is_show: false, button_name: "Refresh last 30min" };
-        console.log(pickerButton);
         this.state = {
             height: 50,
-            start_datetime: dayjs().add(this.props.args["start"], this.props.args["unit"]),
-            end_datetime: dayjs().add(this.props.args["end"], this.props.args["unit"]),
+            picker_type: getPickerType(this.props.args["picker_type"]) || PickerType.date,
+            format_string: getFormatString(this.props.args["picker_type"]) || FormatString.date,
+            start: dayjs().add(this.props.args["start"], this.props.args["unit"]),
+            end: dayjs().add(this.props.args["end"], this.props.args["unit"]),
             picker_button: pickerButton
         }
         Streamlit.setFrameHeight(this.state.height)
@@ -59,28 +60,37 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
         Streamlit.setFrameHeight(this.state.height)
     }
 
-    private parse_string_to_datetime = (datetime_string: string): dayjs.Dayjs => {
-        return dayjs(datetime_string, format_string)
-    }
-
     private setComponentValue = () => {
         Streamlit.setComponentValue([
-            this.state.start_datetime.format(format_string),
-            this.state.end_datetime.format(format_string)])
+            this.state.start.format(this.state.format_string),
+            this.state.start.format(this.state.format_string)])
     }
 
     public render = (): ReactNode => {
         return (
             <div>
-              <RangePicker showTime
-                           format={format_string}
+                {this.state.picker_type === "time" &&
+                    <RangePicker showTime
+                           format={this.state.format_string}
                            onChange={this._onChange}
                            placement={"bottomLeft"}
                            onOpenChange={this._onOpenChange}
-                           value={[this.state.start_datetime, this.state.end_datetime]}
-              />
+                           value={[this.state.start, this.state.end]}
+                    />
+                }
+                {this.state.picker_type !== "time" &&
+                    <RangePicker
+                           picker={this.state.picker_type}
+                           format={this.state.format_string}
+                           onChange={this._onChange}
+                           placement={"bottomLeft"}
+                           onOpenChange={this._onOpenChange}
+              />}
                 {this.state.picker_button.is_show &&
-                    <Button onClick={this._button_on_click} style={{ marginLeft: '20px' }}>{this.state.picker_button.button_name}</Button>}
+                    <Button onClick={this._button_on_click}
+                            style={{ marginLeft: '20px' }}>{this.state.picker_button.button_name}
+                    </Button>
+                }
             </div>
         )
     }
@@ -88,16 +98,16 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
     private _button_on_click = () => {
         this.setState({
             height: 50,
-            start_datetime: dayjs().add(-30, 'minutes'),
-            end_datetime: dayjs()
+            start: dayjs().add(-30, 'minutes'),
+            end: dayjs()
         });
         this.setComponentValue()
     }
 
     private _onChange = (date: any, dateString: any) => {
         this.setState({
-            start_datetime: date[0],
-            end_datetime: date[1]
+            start: date[0],
+            end: date[1]
         });
         Streamlit.setComponentValue(dateString)
     }
