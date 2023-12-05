@@ -8,7 +8,7 @@
 ## Project Introduction
 
 `streamlit-date-picker` is a date picker designed for use with [Streamlit](https://streamlit.io/). It allows users to easily select a range of dates and times.
-![Streamlit Date Picker](https://github.com/imdreamer2018/streamlit-date-picker/blob/master/images/datetime_range_picker.png)
+![Streamlit Date Picker](https://github.com/imdreamer2018/streamlit-date-picker/blob/master/images/date_picker.png)
 
 ## Installation
 
