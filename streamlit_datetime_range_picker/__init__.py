@@ -1,17 +1,53 @@
+from enum import Enum
+
 import streamlit.components.v1 as components
 import os
 
 
-def date_range_picker(picker_type='date', start=-30, end=0, unit='minutes', key=None, refresh_button=None):
-    _RELEASE = False
-    if not _RELEASE:
-        _date_time_range_picker_component = components.declare_component(
-            "date_range_picker",
-            url="http://localhost:3000"
-        )
-    else:
-        parent_dir = os.path.dirname(os.path.abspath(__file__))
-        build_dir = os.path.join(parent_dir, "frontend/build")
-        _date_time_range_picker_component = components.declare_component("date_range_picker", path=build_dir)
+class PickerType(Enum):
+    time = 'time',
+    date = 'date',
+    week = 'week',
+    month = 'month',
+    quarter = 'quarter',
+    year = 'year'
 
-    return _date_time_range_picker_component(picker_type=picker_type, start=start, end=end, unit=unit, key=key, refresh_button=refresh_button)
+    @property
+    def string_value(self):
+        return self.value[0]
+
+
+class Unit(Enum):
+    milliseconds = 'milliseconds',
+    seconds = 'seconds',
+    minutes = 'minutes',
+    hours = 'hours',
+    days = 'days',
+    weeks = 'weeks',
+    months = 'months',
+    years = 'years'
+
+    @property
+    def string_value(self):
+        return self.value[0]
+
+
+_RELEASE = False
+
+if not _RELEASE:
+    component_func = components.declare_component(
+        "date_picker",
+        url="http://localhost:3000",
+    )
+else:
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    build_dir = os.path.join(parent_dir, "frontend/build")
+    component_func = components.declare_component("dater_picker", path=build_dir)
+
+
+def date_range_picker(picker_type='date', start=-30, end=0, unit='minutes', key=None, refresh_button=None):
+    return component_func(id='date_range_picker', kw=locals(), key=key)
+
+
+def date_picker(picker_type='date', value=0, unit='days', key=None):
+    return component_func(id='date_picker', kw=locals(), key=key)
