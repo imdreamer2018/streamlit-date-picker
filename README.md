@@ -54,7 +54,7 @@ if date_string is not None:
 - `end`: Default end time, type: int, default value: 0.
 - `unit`: Default time unit, type: str, options: milliseconds, seconds, minutes, hours, days, weeks, months, years.
 - `key`: Picker key, default value: None.
-- `refresh_button`: Refresh button configuration, type: {'is_show': bool, 'button_name': str}, default values: False and 'Refresh last 30min'. When the button is clicked, it refreshes the selected time range.
+- `refresh_button`: Refresh button configuration, type: {'is_show': bool, 'button_name': str, 'refresh_date': int, 'unit': str}, default values: False, 'Refresh last 30min', -30 and minutes. When the button is clicked, it refreshes the selected time range.
 - The return value of datetime_range_picker is of type str.
 ### Date Picker
 - `picker_type`: Default picker type, type: str, options: time, date, week, month, quarter, year.

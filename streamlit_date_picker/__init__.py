@@ -45,7 +45,7 @@ else:
     component_func = components.declare_component("dater_picker", path=build_dir)
 
 
-def date_range_picker(picker_type='date', start=-30, end=0, unit='minutes', key=None, refresh_button=None):
+def date_range_picker(picker_type='time', start=-30, end=0, unit='minutes', key=None, refresh_button=None):
     return component_func(id='date_range_picker', kw=locals(), key=key)
 
 
