@@ -38,7 +38,6 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
 
     constructor(props: ComponentProps<any>) {
         super(props);
-        console.log('range picker props', props)
         const refreshButton = this.props.args.kw["refresh_button"]
             || { is_show: false, button_name: "Refresh last 30min", refresh_date: 30, unit: "minutes"};
         this.state = {
