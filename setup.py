@@ -5,7 +5,7 @@ README = (Path(__file__).parent/"README.md").read_text()
 
 setuptools.setup(
     name="streamlit-date-picker",
-    version="0.0.2-b3",
+    version="0.0.2",
     author="Yang Qian",
     author_email="qian.yang2@thoughtworks.com",
     description="this is date picker for streamlit",
