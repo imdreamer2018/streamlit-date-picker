@@ -13,7 +13,7 @@ import 'dayjs/locale/zh-cn';
 import 'dayjs/plugin/utc';
 import 'dayjs/plugin/timezone';
 import 'dayjs/plugin/localeData';
-import {FormatString, getFormatString, getPickerType, PickerType} from "./utils";
+import {FormatString, getFormatString, getPickerType, PickerType, Unit} from "./utils";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -28,9 +28,11 @@ interface State {
     format_string: FormatString
     start: dayjs.Dayjs,
     end: dayjs.Dayjs,
-    picker_button: {
+    fresh_button: {
         is_show: boolean,
-        button_name: string
+        button_name: string,
+        refresh_date: number,
+        unit: Unit
     }
 }
 class DatetimeRangePicker extends StreamlitComponentBase<State> {
@@ -38,14 +40,14 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
 
     constructor(props: ComponentProps<any>, context: any) {
         super(props, context);
-        const pickerButton = this.props.args["picker_button"] || { is_show: false, button_name: "Refresh last 30min" };
+        const refreshButton = this.props.args["refresh_button"] || { is_show: false, button_name: "Refresh last 30min", refresh_date: 30, unit: "minutes"};
         this.state = {
             height: 50,
             picker_type: getPickerType(this.props.args["picker_type"]) || PickerType.date,
             format_string: getFormatString(this.props.args["picker_type"]) || FormatString.date,
             start: dayjs().add(this.props.args["start"], this.props.args["unit"]),
             end: dayjs().add(this.props.args["end"], this.props.args["unit"]),
-            picker_button: pickerButton
+            fresh_button: refreshButton
         }
         Streamlit.setFrameHeight(this.state.height)
         this.setComponentValue()
@@ -63,7 +65,7 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
     private setComponentValue = () => {
         Streamlit.setComponentValue([
             this.state.start.format(this.state.format_string),
-            this.state.start.format(this.state.format_string)])
+            this.state.end.format(this.state.format_string)])
     }
 
     public render = (): ReactNode => {
@@ -85,10 +87,11 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
                            onChange={this._onChange}
                            placement={"bottomLeft"}
                            onOpenChange={this._onOpenChange}
+                           value={[this.state.start, this.state.end]}
               />}
-                {this.state.picker_button.is_show &&
+                {this.state.fresh_button.is_show &&
                     <Button onClick={this._button_on_click}
-                            style={{ marginLeft: '20px' }}>{this.state.picker_button.button_name}
+                            style={{ marginLeft: '20px' }}>{this.state.fresh_button.button_name}
                     </Button>
                 }
             </div>
@@ -98,7 +101,7 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
     private _button_on_click = () => {
         this.setState({
             height: 50,
-            start: dayjs().add(-30, 'minutes'),
+            start: dayjs().add(-this.state.fresh_button.refresh_date, this.state.fresh_button.unit),
             end: dayjs()
         });
         this.setComponentValue()

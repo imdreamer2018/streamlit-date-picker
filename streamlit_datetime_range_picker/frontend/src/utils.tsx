@@ -52,3 +52,14 @@ export const getFormatString = (value: string): FormatString | undefined => {
       return FormatString.date;
   }
 }
+
+export enum Unit {
+  milliseconds='milliseconds',
+  seconds='seconds',
+  minutes='minutes',
+  hours='hours',
+  days='days',
+  weeks='weeks',
+  months='months',
+  years='years'
+}
