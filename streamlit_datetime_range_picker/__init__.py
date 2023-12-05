@@ -32,7 +32,7 @@ class Unit(Enum):
         return self.value[0]
 
 
-_RELEASE = False
+_RELEASE = True
 
 if not _RELEASE:
     component_func = components.declare_component(
