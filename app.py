@@ -1,9 +1,10 @@
 import streamlit as st
-from streamlit_datetime_range_picker import date_range_picker, date_picker, PickerType, Unit
+from streamlit_datetime_range_picker import date_range_picker
 
-st.title('Streamlit Datetime Range Picker')
+st.title('Streamlit Date Picker')
 
 # Use date_range_picker to create a datetime range picker
+st.subheader('Date Range Picker')
 datetime_string = date_range_picker(picker_type=PickerType.time.string_value,
                                     start=-30, end=0, unit=Unit.minutes.string_value,
                                     key='range_picker',
@@ -16,6 +17,7 @@ if datetime_string is not None:
     st.write(f"Date Range Picker [{start_datetime}, {end_datetime}]")
 
 
+st.subheader('Date Picker')
 # Use date_picker to create a date picker
 date_string = date_picker(picker_type=PickerType.time.string_value, value=0, unit=Unit.days.string_value, key='date_picker')
 
