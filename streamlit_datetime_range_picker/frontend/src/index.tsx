@@ -1,10 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import DatetimeRangePicker from "./DatetimeRangePicker";
+import DateRangePicker from "./RangePicker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DatetimeRangePicker />
+      <DateRangePicker/>
   </React.StrictMode>,
   document.getElementById("root")
 );

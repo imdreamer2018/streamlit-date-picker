@@ -35,7 +35,7 @@ interface State {
         unit: Unit
     }
 }
-class DatetimeRangePicker extends StreamlitComponentBase<State> {
+class DateRangePicker extends StreamlitComponentBase<State> {
 
 
     constructor(props: ComponentProps<any>, context: any) {
@@ -101,7 +101,7 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
     private _button_on_click = () => {
         this.setState({
             height: 50,
-            start: dayjs().add(-this.state.fresh_button.refresh_date, this.state.fresh_button.unit),
+            start: dayjs().add(this.state.fresh_button.refresh_date, this.state.fresh_button.unit),
             end: dayjs()
         });
         this.setComponentValue()
@@ -122,4 +122,4 @@ class DatetimeRangePicker extends StreamlitComponentBase<State> {
     }
 }
 
-export default withStreamlitConnection(DatetimeRangePicker)
+export default withStreamlitConnection(DateRangePicker)
