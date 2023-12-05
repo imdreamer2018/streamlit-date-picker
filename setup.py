@@ -5,10 +5,10 @@ README = (Path(__file__).parent/"README.md").read_text()
 
 setuptools.setup(
     name="streamlit-datetime-range-picker",
-    version="0.0.1",
+    version="0.0.2-beta1",
     author="Yang Qian",
     author_email="qian.yang2@thoughtworks.com",
-    description="this is datetime range picker for streamlit",
+    description="this is date picker for streamlit",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/imdreamer2018/streamlit-datetime-range-picker",

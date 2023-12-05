@@ -1,7 +1,7 @@
 {
-  "name": "frontend",
-  "description": "skynet website frontend template",
-  "author": "qian.yang2@thoughtworks.com",
+  "name": "date_picker",
+  "description": "streamlit date picker",
+  "author": "hi.yangqian@gmail.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
