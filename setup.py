@@ -5,7 +5,7 @@ README = (Path(__file__).parent/"README.md").read_text()
 
 setuptools.setup(
     name="streamlit-date-picker",
-    version="0.0.2b6",
+    version="0.0.3",
     author="Yang Qian",
     author_email="qian.yang2@thoughtworks.com",
     description="this is date picker for streamlit",
@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[],
-    python_requires=">=3.10",
+    python_requires=">=3.8",
     license_files=("LICENSE",),
     install_requires=[
         # By definition, a Custom Component depends on Streamlit.
