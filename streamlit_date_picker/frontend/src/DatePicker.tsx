@@ -21,7 +21,6 @@ dayjs.tz.setDefault('Asia/Shanghai');
 
 
 interface State {
-    height: number,
     picker_type: PickerType,
     format_string: FormatString
     value: dayjs.Dayjs,
@@ -32,22 +31,11 @@ export class DatePicker extends StreamlitComponentBase<State> {
     constructor(props: ComponentProps<any>) {
         super(props);
         this.state = {
-            height: 50,
-            picker_type: getPickerType(this.props.args.kw["picker_type"]) || PickerType.date,
-            format_string: getFormatString(this.props.args.kw["picker_type"]) || FormatString.date,
-            value: dayjs().add(this.props.args.kw["value"], this.props.args.kw["unit"]),
+            picker_type: getPickerType(this.props.args["picker_type"]) || PickerType.date,
+            format_string: getFormatString(this.props.args["picker_type"]) || FormatString.date,
+            value: dayjs(this.props.args["value"] * 1000),
         }
-        Streamlit.setFrameHeight(this.state.height)
         this.setComponentValue()
-    }
-
-    componentDidMount() {
-        super.componentDidMount();
-
-    }
-    componentDidUpdate() {
-        super.componentDidUpdate()
-        Streamlit.setFrameHeight(this.state.height)
     }
 
     private setComponentValue = () => {
@@ -56,7 +44,7 @@ export class DatePicker extends StreamlitComponentBase<State> {
 
     public render = (): ReactNode => {
         return (
-            <div>
+            <div style={{ height: '50px' }}>
                 {this.state.picker_type === "time" &&
                     <TimePicker
                            format={this.state.format_string}
@@ -87,8 +75,7 @@ export class DatePicker extends StreamlitComponentBase<State> {
     }
 
     private _onOpenChange: DatePickerProps['onOpenChange'] = (isOpen) => {
-        this.setState({
-            height: isOpen ? 450: 50
-        })
+        Streamlit.setFrameHeight(450);
+        super.componentDidUpdate();
     }
 }

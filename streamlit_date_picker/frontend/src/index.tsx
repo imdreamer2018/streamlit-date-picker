@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom"
+import { createRoot } from 'react-dom/client';
 import {ComponentProps, withStreamlitConnection} from "streamlit-component-lib";
 import {DateRangePicker} from "./RangePicker";
 import {DatePicker} from "./DatePicker";
@@ -22,9 +22,10 @@ const DatePickerComponent = (props: ComponentProps) => {
 // @ts-ignore
 const StreamlitDatePickerComponent = withStreamlitConnection(DatePickerComponent)
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root") as HTMLElement);
+
+root.render(
   <React.StrictMode>
       <StreamlitDatePickerComponent/>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

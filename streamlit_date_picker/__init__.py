@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from enum import Enum
 
 import streamlit.components.v1 as components
@@ -12,10 +13,6 @@ class PickerType(Enum):
     quarter = 'quarter',
     year = 'year'
 
-    @property
-    def string_value(self):
-        return self.value[0]
-
 
 class Unit(Enum):
     milliseconds = 'milliseconds',
@@ -26,10 +23,6 @@ class Unit(Enum):
     weeks = 'weeks',
     months = 'months',
     years = 'years'
-
-    @property
-    def string_value(self):
-        return self.value[0]
 
 
 _RELEASE = True
@@ -45,9 +38,18 @@ else:
     component_func = components.declare_component("dater_picker", path=build_dir)
 
 
-def date_range_picker(picker_type='time', start=-30, end=0, unit='minutes', key=None, refresh_button=None):
-    return component_func(id='date_range_picker', kw=locals(), key=key)
+def convert_timedelta_to_total_seconds(delta: timedelta):
+    return delta.total_seconds()
 
 
-def date_picker(picker_type='date', value=0, unit='days', key=None):
-    return component_func(id='date_picker', kw=locals(), key=key)
+def date_range_picker(picker_type=PickerType.time, start: datetime = datetime.now(), end: datetime = datetime.now(),
+                      key=None, refresh_button=None):
+    if refresh_button is not None:
+        refresh_button['refresh_value'] = convert_timedelta_to_total_seconds(refresh_button['refresh_value'])
+    return component_func(id='date_range_picker', key=key, picker_type=picker_type.name,
+                          start=str(start.timestamp()), end=str(end.timestamp()),
+                          refresh_button=refresh_button)
+
+
+def date_picker(picker_type=PickerType.date, value: datetime = datetime.now(), key=None):
+    return component_func(id='date_picker', key=key, picker_type=picker_type.name, value=str(value.timestamp()))
