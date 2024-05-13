@@ -14,17 +14,6 @@ class PickerType(Enum):
     year = 'year'
 
 
-class Unit(Enum):
-    milliseconds = 'milliseconds',
-    seconds = 'seconds',
-    minutes = 'minutes',
-    hours = 'hours',
-    days = 'days',
-    weeks = 'weeks',
-    months = 'months',
-    years = 'years'
-
-
 _RELEASE = True
 
 if not _RELEASE:
