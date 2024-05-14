@@ -88,14 +88,13 @@ with column2:
         start, end = date_range_string
         st.write(f"Time Range Picker [{start}, {end}]")
 
-    st.markdown("#### 2.Date Range Picker")
+    st.markdown("#### 2.Date Range Picker not show refresh button")
     default_start, default_end = datetime.now() - timedelta(days=1), datetime.now()
     refresh_value = timedelta(days=1)
     date_range_string = date_range_picker(picker_type=PickerType.date,
                                           start=default_start, end=default_end,
                                           key='date_range_picker',
-                                          refresh_button={'is_show': True, 'button_name': 'Refresh Last 1 Days',
-                                                          'refresh_value': refresh_value})
+                                          refresh_button=None)
     if date_range_string:
         start, end = date_range_string
         st.write(f"Date Range Picker [{start}, {end}]")
