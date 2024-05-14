@@ -33,7 +33,7 @@ with st.sidebar:
     """)
 st.title('Streamlit Date Picker')
 
-column1, column2 = st.columns(2)
+column1, column2 = st.columns([1, 2])
 
 with column1:
     st.subheader('Date Picker')
