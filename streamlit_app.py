@@ -14,7 +14,7 @@ st.set_page_config(page_title="streamlit date picker",
 with st.sidebar:
     st.markdown("""
         ## Introduction
-        ``streamlit-date-picker` is a date picker designed for use with [Streamlit](https://streamlit.io/). It allows users to easily select a range of dates and times.
+        `streamlit-date-picker` is a date picker designed for use with [Streamlit](https://streamlit.io/). It allows users to easily select a range of dates and times.
         ## Github
         - [Streamlit date picker](https://github.com/imdreamer2018/streamlit-date-picker)
         
