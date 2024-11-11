@@ -182,11 +182,13 @@ if date_range_string:
 - `key`: Picker key, default value: None.
 - `start`: Default start datetime, type: datetime, default value: datetime.now().
 - `end`: Default end datetime, type: int, default value: datetime.now().
-- `refresh_button`: Refresh button configuration, type: {'is_show': bool, 'button_name': str, 'refresh_value': datetime}, default values: None. When the button is clicked, it refreshes the selected time range.
+- `refresh_buttons`: Mutil Refresh button configuration, type: [{'button_name': str, 'refresh_value': datetime}], default values: []. When the button is clicked, it refreshes the selected time range.
+- `available_dates`: Available dates, type: List[datetime], default value: None, can select all dates.
 - The return value of datetime_range_picker is of type str.
 ### Date Picker
 - `picker_type`: Default picker type, type: str, options: time, date, week, month, quarter, year.
 - `value`: Default value, type: datetime, default value: datetime.now().
+- `available_dates`: Available dates, type: List[datetime], default value: None, can select all dates.
 - `key`: Picker key, default value: None.
 
 ## License
