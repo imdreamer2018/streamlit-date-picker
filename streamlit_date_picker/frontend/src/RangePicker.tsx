@@ -23,28 +23,24 @@ const { RangePicker } = DatePicker;
 
 interface State {
     picker_type: PickerType,
-    format_string: FormatString
+    format_string: FormatString,
     start: dayjs.Dayjs,
     end: dayjs.Dayjs,
-    fresh_button: {
-        is_show: boolean,
-        button_name: string,
-        refresh_value: number,
-    },
+    refresh_buttons: { button_name: string, refresh_value: number }[],
     availableDates: dayjs.Dayjs[]
 }
 export class DateRangePicker extends StreamlitComponentBase<State> {
 
     constructor(props: ComponentProps<any>) {
         super(props);
-        const refreshButton = this.props.args["refresh_button"]
-            || { is_show: false, button_name: "Refresh button", refresh_value: 0};
+        const refreshButtons = this.props.args["refresh_buttons"] || [];
+        console.log(refreshButtons);
         this.state = {
             picker_type: getPickerType(this.props.args["picker_type"]) || PickerType.date,
             format_string: getFormatString(this.props.args["picker_type"]) || FormatString.date,
             start: dayjs(this.props.args["start"] * 1000),
             end: dayjs(this.props.args["end"] * 1000),
-            fresh_button: refreshButton,
+            refresh_buttons: refreshButtons,
             availableDates: this.props.args["available_dates"] ? 
                 this.props.args["available_dates"].map((available_date: number) => dayjs(available_date * 1000)) : []
         }
@@ -59,7 +55,7 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
 
     public render = (): ReactNode => {
         return (
-            <div style={{ height: '50px' }}>
+            <div style={{ height: '60px', display: 'flex', alignItems: 'center' }}>
                 {this.state.picker_type === "time" &&
                     <RangePicker showTime
                            format={this.state.format_string}
@@ -79,22 +75,26 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
                            onOpenChange={this._onOpenChange}
                            value={[this.state.start, this.state.end]}
                            disabledDate={this.disabledDate}
-              />}
-                {this.state.fresh_button.is_show &&
-                    <Button onClick={this._button_on_click}
-                            style={{ marginLeft: '20px' }}>{this.state.fresh_button.button_name}
-                    </Button>
-                }
+                    />}
+                <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: '20px' }}>
+                    {this.state.refresh_buttons.length > 0 &&
+                        this.state.refresh_buttons.map((button, index) => (
+                            <Button key={'fresh_button_'+index} onClick={() => this._button_on_click(button.refresh_value)}
+                                    style={{ marginLeft: '10px' }}>{button.button_name}
+                            </Button>
+                        ))
+                    }
+                </div>
             </div>
         )
     }
 
-    private _button_on_click = () => {
+    private _button_on_click = (refreshValue: number) => {
         this.setState({
-            start: dayjs().subtract(this.state.fresh_button.refresh_value, 'seconds'),
+            start: dayjs().subtract(refreshValue, 'seconds'),
             end: dayjs()
         });
-        this.setComponentValue()
+        this.setComponentValue();
     }
 
     private _onChange = (date: any, dateString: any) => {

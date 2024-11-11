@@ -32,15 +32,18 @@ def convert_timedelta_to_total_seconds(delta: timedelta):
 
 
 def date_range_picker(picker_type=PickerType.time, start: datetime = datetime.now(), end: datetime = datetime.now(),
-                      available_dates=None, key=None, refresh_button=None):
-    if refresh_button is not None:
-        refresh_button['refresh_value'] = convert_timedelta_to_total_seconds(refresh_button['refresh_value'])
+                      available_dates=None, key=None, refresh_buttons=[]):
+    if refresh_buttons is not None:
+        for refresh_button in refresh_buttons:
+            refresh_button['refresh_value'] = convert_timedelta_to_total_seconds(refresh_button['refresh_value'])
+
+    print(refresh_buttons)
     if available_dates is not None:
         available_dates = [available_date.timestamp() for available_date in available_dates]
     return component_func(id='date_range_picker', key=key, picker_type=picker_type.name,
                           start=str(start.timestamp()), end=str(end.timestamp()),
-                          available_dates = available_dates,
-                          refresh_button=refresh_button)
+                          available_dates=available_dates,
+                          refresh_buttons=refresh_buttons)
 
 
 def date_picker(picker_type=PickerType.date, value: datetime = datetime.now(), available_dates=None, key=None):
