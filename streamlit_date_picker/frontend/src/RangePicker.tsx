@@ -30,7 +30,8 @@ interface State {
         is_show: boolean,
         button_name: string,
         refresh_value: number,
-    }
+    },
+    availableDates: dayjs.Dayjs[]
 }
 export class DateRangePicker extends StreamlitComponentBase<State> {
 
@@ -43,7 +44,9 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
             format_string: getFormatString(this.props.args["picker_type"]) || FormatString.date,
             start: dayjs(this.props.args["start"] * 1000),
             end: dayjs(this.props.args["end"] * 1000),
-            fresh_button: refreshButton
+            fresh_button: refreshButton,
+            availableDates: this.props.args["available_dates"] ? 
+                this.props.args["available_dates"].map((available_date: number) => dayjs(available_date * 1000)) : []
         }
         this.setComponentValue();
     }
@@ -64,6 +67,7 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
                            placement={"bottomLeft"}
                            onOpenChange={this._onOpenChange}
                            value={[this.state.start, this.state.end]}
+                           disabledDate={this.disabledDate}
                     />
                 }
                 {this.state.picker_type !== "time" &&
@@ -74,6 +78,7 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
                            placement={"bottomLeft"}
                            onOpenChange={this._onOpenChange}
                            value={[this.state.start, this.state.end]}
+                           disabledDate={this.disabledDate}
               />}
                 {this.state.fresh_button.is_show &&
                     <Button onClick={this._button_on_click}
@@ -103,5 +108,12 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
     private _onOpenChange: DatePickerProps['onOpenChange'] = (isOpen) => {
         Streamlit.setFrameHeight(450);
         super.componentDidUpdate();
+    }
+
+    private disabledDate = (current: dayjs.Dayjs) => {
+        if (this.state.availableDates.length === 0) {
+            return false;
+        }
+        return !this.state.availableDates.some(availableDate => availableDate.isSame(current, 'day'));
     }
 }

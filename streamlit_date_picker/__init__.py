@@ -14,7 +14,7 @@ class PickerType(Enum):
     year = 'year'
 
 
-_RELEASE = True
+_RELEASE = False
 
 if not _RELEASE:
     component_func = components.declare_component(
@@ -32,13 +32,19 @@ def convert_timedelta_to_total_seconds(delta: timedelta):
 
 
 def date_range_picker(picker_type=PickerType.time, start: datetime = datetime.now(), end: datetime = datetime.now(),
-                      key=None, refresh_button=None):
+                      available_dates=None, key=None, refresh_button=None):
     if refresh_button is not None:
         refresh_button['refresh_value'] = convert_timedelta_to_total_seconds(refresh_button['refresh_value'])
+    if available_dates is not None:
+        available_dates = [available_date.timestamp() for available_date in available_dates]
     return component_func(id='date_range_picker', key=key, picker_type=picker_type.name,
                           start=str(start.timestamp()), end=str(end.timestamp()),
+                          available_dates = available_dates,
                           refresh_button=refresh_button)
 
 
-def date_picker(picker_type=PickerType.date, value: datetime = datetime.now(), key=None):
-    return component_func(id='date_picker', key=key, picker_type=picker_type.name, value=str(value.timestamp()))
+def date_picker(picker_type=PickerType.date, value: datetime = datetime.now(), available_dates=None, key=None):
+    if available_dates is not None:
+        available_dates = [available_date.timestamp() for available_date in available_dates]
+    return component_func(id='date_picker', key=key, picker_type=picker_type.name, value=str(value.timestamp()), 
+                          available_dates=available_dates)

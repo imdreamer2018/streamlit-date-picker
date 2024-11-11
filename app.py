@@ -5,8 +5,25 @@ from streamlit_date_picker import date_range_picker, date_picker, PickerType
 
 st.title('Streamlit Date Picker')
 st.subheader('Date Picker')
+st.markdown("#### 1.Date Picker")
 default_value = datetime.now()
-select_date = date_picker(picker_type=PickerType.time, value=default_value, key='date_picker')
+select_date = date_picker(picker_type=PickerType.date, value=default_value, key='date_picker')
+
+if select_date:
+    st.write(f"Date Picker: {select_date}")
+
+st.markdown("#### 2.Available Date Picker")
+default_value = datetime.now()
+available_datas = [
+    datetime.now() - timedelta(days=4),
+    datetime.now() - timedelta(days=3),
+    datetime.now() - timedelta(days=1),
+    datetime.now(),
+    datetime.now() + timedelta(days=1),
+    datetime.now() + timedelta(days=3),
+    datetime.now() + timedelta(days=4),
+]
+select_date = date_picker(picker_type=PickerType.date, value=default_value, key='available_date_picker', available_dates=available_datas)
 
 if select_date:
     st.write(f"Date Picker: {select_date}")
@@ -71,3 +88,22 @@ date_range_string = date_range_picker(picker_type=PickerType.year,
 if date_range_string:
     start, end = date_range_string
     st.write(f"Year Range Picker [{start}, {end}]")
+
+st.markdown("#### 6.Available Date Range Picker")
+default_start, default_end = datetime.now() - timedelta(days=1), datetime.now()
+available_datas = [
+    datetime.now() - timedelta(days=4),
+    datetime.now() - timedelta(days=3),
+    datetime.now() - timedelta(days=1),
+    datetime.now(),
+    datetime.now() + timedelta(days=1),
+    datetime.now() + timedelta(days=3),
+    datetime.now() + timedelta(days=4),
+]
+date_range_string = date_range_picker(picker_type=PickerType.date,
+                                      start=default_start, end=default_end,
+                                      available_dates=available_datas,
+                                      key='available_date_range_picker',)
+if date_range_string:
+    start, end = date_range_string
+    st.write(f"Date Range Picker [{start}, {end}]")

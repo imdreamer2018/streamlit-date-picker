@@ -24,6 +24,7 @@ interface State {
     picker_type: PickerType,
     format_string: FormatString
     value: dayjs.Dayjs,
+    availableDates: dayjs.Dayjs[],
 }
 export class DatePicker extends StreamlitComponentBase<State> {
 
@@ -34,6 +35,8 @@ export class DatePicker extends StreamlitComponentBase<State> {
             picker_type: getPickerType(this.props.args["picker_type"]) || PickerType.date,
             format_string: getFormatString(this.props.args["picker_type"]) || FormatString.date,
             value: dayjs(this.props.args["value"] * 1000),
+            availableDates: this.props.args["available_dates"] ? 
+                this.props.args["available_dates"].map((available_date: number) => dayjs(available_date * 1000)) : []
         }
         this.setComponentValue()
     }
@@ -62,6 +65,7 @@ export class DatePicker extends StreamlitComponentBase<State> {
                            placement={"bottomLeft"}
                            onOpenChange={this._onOpenChange}
                            value={this.state.value}
+                           disabledDate={this.disabledDate}
               />}
             </div>
         )
@@ -77,5 +81,12 @@ export class DatePicker extends StreamlitComponentBase<State> {
     private _onOpenChange: DatePickerProps['onOpenChange'] = (isOpen) => {
         Streamlit.setFrameHeight(450);
         super.componentDidUpdate();
+    }
+
+    private disabledDate = (current: dayjs.Dayjs) => {
+        if (this.state.availableDates.length === 0) {
+            return false;
+        }
+        return !this.state.availableDates.some(availableDate => availableDate.isSame(current, 'day'));
     }
 }
