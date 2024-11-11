@@ -1,2 +1,2 @@
 streamlit==1.34.0
-streamlit-date-picker==0.0.3
+streamlit-date-picker==0.0.4
