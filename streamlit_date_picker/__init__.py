@@ -37,7 +37,6 @@ def date_range_picker(picker_type=PickerType.time, start: datetime = datetime.no
         for refresh_button in refresh_buttons:
             refresh_button['refresh_value'] = convert_timedelta_to_total_seconds(refresh_button['refresh_value'])
 
-    print(refresh_buttons)
     if available_dates is not None:
         available_dates = [available_date.timestamp() for available_date in available_dates]
     return component_func(id='date_range_picker', key=key, picker_type=picker_type.name,

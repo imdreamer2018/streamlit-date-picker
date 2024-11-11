@@ -34,7 +34,6 @@ export class DateRangePicker extends StreamlitComponentBase<State> {
     constructor(props: ComponentProps<any>) {
         super(props);
         const refreshButtons = this.props.args["refresh_buttons"] || [];
-        console.log(refreshButtons);
         this.state = {
             picker_type: getPickerType(this.props.args["picker_type"]) || PickerType.date,
             format_string: getFormatString(this.props.args["picker_type"]) || FormatString.date,
