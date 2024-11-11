@@ -14,7 +14,7 @@ class PickerType(Enum):
     year = 'year'
 
 
-_RELEASE = False
+_RELEASE = True
 
 if not _RELEASE:
     component_func = components.declare_component(
