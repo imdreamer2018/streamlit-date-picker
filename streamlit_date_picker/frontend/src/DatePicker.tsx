@@ -3,7 +3,7 @@ import {
   StreamlitComponentBase,
 } from "streamlit-component-lib"
 import React, {ComponentProps, ReactNode} from "react"
-import { DatePicker as DATE_PICKER, TimePicker, DatePickerProps } from 'antd';
+import { DatePicker as DATE_PICKER, DatePickerProps } from 'antd';
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -49,12 +49,13 @@ export class DatePicker extends StreamlitComponentBase<State> {
         return (
             <div style={{ height: '50px' }}>
                 {this.state.picker_type === "time" &&
-                    <TimePicker
+                    <DATE_PICKER showTime
                            format={this.state.format_string}
                            onChange={this._onChange}
                            placement={"bottomLeft"}
                            onOpenChange={this._onOpenChange}
                            value={this.state.value}
+                           disabledDate={this.disabledDate}
                     />
                 }
                 {this.state.picker_type !== "time" &&

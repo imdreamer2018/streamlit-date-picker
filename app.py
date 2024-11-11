@@ -11,14 +11,20 @@ st.set_page_config(
 
 st.title('Streamlit Date Picker')
 st.subheader('Date Picker')
-st.markdown("#### 1.Date Picker")
+st.markdown("#### 1.Time Picker")
+default_value = datetime.now()
+select_date = date_picker(picker_type=PickerType.time, value=default_value, key='time_date_picker')
+if select_date:
+    st.write(f"Date Picker: {select_date}")
+
+st.markdown("#### 2.Date Picker")
 default_value = datetime.now()
 select_date = date_picker(picker_type=PickerType.date, value=default_value, key='date_picker')
 
 if select_date:
     st.write(f"Date Picker: {select_date}")
 
-st.markdown("#### 2.Available Date Picker")
+st.markdown("#### 3.Available Date Picker")
 default_value = datetime.now()
 available_datas = [
     datetime.now() - timedelta(days=4),
